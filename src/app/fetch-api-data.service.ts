@@ -21,20 +21,21 @@ export class UserRegistrationService {
   }
 
   public loginUser(userDetails: any): Observable<any> {
-    return this.http.post<any>(`${apiUrl}/login`, userDetails)
+    return this.http.post<any>(`${apiUrl}login`, userDetails)
       .pipe(catchError(this.handleError));
   }
 
   public getAllMovies(): Observable<any> {
-    return this.http.get<any>(`${apiUrl}/movies`)
+    return this.http.get<any>(`${apiUrl}movies`)
       .pipe(catchError(this.handleError));
   }
 
   public getMovie(id: string): Observable<any> {
-    return this.http.get<any>(`${apiUrl}/movies/${id}`)
+    return this.http.get<any>(`${apiUrl}movies/${id}`)
       .pipe(catchError(this.handleError));
   }
 
+  // Double Check the / directors and see if a double // is showing up - this could be the error. need to change for all endpoints below
   public getDirector(id: string): Observable<any> {
     return this.http.get<any>(`${apiUrl}/directors/${id}`)
       .pipe(catchError(this.handleError));

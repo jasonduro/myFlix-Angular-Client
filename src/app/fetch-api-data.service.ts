@@ -5,15 +5,13 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
-const apiUrl = 'YOUR_HOSTED_API_URL_HERE/';
-@Injectable({
-  providedIn: 'root'
-})
+const apiUrl = 'https://myflix-app-jl.herokuapp.com/';
+@Injectable({ providedIn: 'root' })
+
 export class UserRegistrationService {
   // Inject the HttpClient module to the constructor params
  // This will provide HttpClient to the entire class, making it available via this.http
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
  // Making the api call for the user registration endpoint
   public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
@@ -23,57 +21,57 @@ export class UserRegistrationService {
   }
 
   public loginUser(userDetails: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, userDetails)
+    return this.http.post<any>(`${apiUrl}/login`, userDetails)
       .pipe(catchError(this.handleError));
   }
 
   public getAllMovies(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/movies`)
+    return this.http.get<any>(`${apiUrl}/movies`)
       .pipe(catchError(this.handleError));
   }
 
   public getMovie(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/movies/${id}`)
+    return this.http.get<any>(`${apiUrl}/movies/${id}`)
       .pipe(catchError(this.handleError));
   }
 
   public getDirector(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/directors/${id}`)
+    return this.http.get<any>(`${apiUrl}/directors/${id}`)
       .pipe(catchError(this.handleError));
   }
 
   public getGenre(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/genres/${id}`)
+    return this.http.get<any>(`${apiUrl}/genres/${id}`)
       .pipe(catchError(this.handleError));
   }
 
   public getUser(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/users/${id}`)
+    return this.http.get<any>(`${apiUrl}/users/${id}`)
       .pipe(catchError(this.handleError));
   }
 
   public getFavouriteMovies(userId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/users/${userId}/movies`)
+    return this.http.get<any>(`${apiUrl}/users/${userId}/movies`)
       .pipe(catchError(this.handleError));
   }
 
   public addFavouriteMovie(userId: string, movieId: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/users/${userId}/movies/${movieId}`, {})
+    return this.http.post<any>(`${apiUrl}/users/${userId}/movies/${movieId}`, {})
       .pipe(catchError(this.handleError));
   }
 
   public editUser(userId: string, userDetails: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/users/${userId}`, userDetails)
+    return this.http.put<any>(`${apiUrl}/users/${userId}`, userDetails)
       .pipe(catchError(this.handleError));
   }
 
   public deleteUser(userId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/users/${userId}`)
+    return this.http.delete<any>(`${apiUrl}/users/${userId}`)
       .pipe(catchError(this.handleError));
   }
 
   public deleteFavouriteMovie(userId: string, movieId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/users/${userId}/movies/${movieId}`)
+    return this.http.delete<any>(`${apiUrl}/users/${userId}/movies/${movieId}`)
       .pipe(catchError(this.handleError));
   }
 

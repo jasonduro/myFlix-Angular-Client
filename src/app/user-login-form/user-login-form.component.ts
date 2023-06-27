@@ -1,10 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-
 import { MatDialogRef } from '@angular/material/dialog';
-
-import { UserRegistrationService } from '../fetch-api-data.service';
-
+import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-login-form',
@@ -12,34 +10,34 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./user-login-form.component.scss']
 })
 export class UserLoginFormComponent implements OnInit {   
-  
     @Input() userData = { Username: '', Password: '' };
   
     constructor(
-      public fetchApiData: UserRegistrationService,
+      public fetchApiData: FetchApiDataService,
       public dialogRef: MatDialogRef<UserLoginFormComponent>,
-      public snackBar: MatSnackBar) { }
+      public snackBar: MatSnackBar,
+      private router: Router 
+    ) { }
   
     ngOnInit(): void {
     }
   
     // This is the function responsible for sending the form inputs to the backend
     loginUser(): void {
-      this.fetchApiData.loginUser(this.userData).subscribe((response) => {
+      this.fetchApiData.loginUser(this.userData).subscribe((result) => {
         // Logic for a successful user login goes here! (To be implemented)
-        console.log(response);
+        console.log(result);
+        localStorage.setItem('user', result.user.Username);
+        localStorage.setItem('token', result.token);
         this.dialogRef.close(); // This will close the modal on success!
-        localStorage.setItem('user', response.user.Username);
-        localStorage.setItem('token', response.token);
         this.snackBar.open('user logged in successfully', 'OK', {
           duration: 2000
         });
-      }, (response) => {
-        console.log(response);
-        this.snackBar.open(response, 'OK', {
+        this.router.navigate(['movies']);
+      }, (result) => {
+        this.snackBar.open('User Login Failed', 'OK', {
           duration: 2000
         });
       });
     }
-
 }

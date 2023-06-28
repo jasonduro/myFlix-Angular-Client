@@ -15,11 +15,11 @@ export class ProfileViewComponent implements OnInit {
   user: any = {};
   favoriteMovies: any = [];
 
-  @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
+  @Input() updatedUser = { Username: '', Password: '', Email: '', Birthday: '' };
 
   constructor(
     public fetchApiData: FetchApiDataService,
-    // public dialogRef: MatDialogRef<ProfileViewComponent>,
+    //public dialogRef: MatDialogRef<ProfileViewComponent>,
     public snackBar: MatSnackBar,
     private router: Router
   ) { }
@@ -30,29 +30,28 @@ export class ProfileViewComponent implements OnInit {
 
   getUser(): void {
     this.fetchApiData.getUser().subscribe((user) => {
+      console.log(user);
       this.user = user;
-      this.userData.Username = this.user.Username;
-      this.userData.Email = this.user.Email;
-      this.userData.Birthday = formatDate(this.user.Birthday, 'yyyy-MM-dd', 'en-US', 'UTC+0');
+      this.updatedUser.Username = this.user.Username;
+      this.updatedUser.Email = this.user.Email;
+      this.updatedUser.Birthday = formatDate(this.user.Birthday, 'yyyy-MM-dd', 'en' );
     
       this.fetchApiData.getAllMovies().subscribe((response: any) => {
         this.favoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
         return this.user;
-      });
+      }); 
     });
   }
     
 
   updateUser(): void {
-    this.fetchApiData.updateUser(this.userData.Username, this.userData).subscribe((response) => {
-      localStorage.setItem('user', JSON.stringify(response));
+    this.fetchApiData.updateUser(this.updatedUser).subscribe((response) => {
+      console.log(response);
+      localStorage.setItem('user', (response));
 
       this.snackBar.open('User successfully updated', 'OK', {
         duration: 2000
       });
-
-      this.getUser(); // Refresh the user data
-
     }, (response) => {
       this.snackBar.open(response, 'OK', {
         duration: 2000

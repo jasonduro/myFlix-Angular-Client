@@ -47,8 +47,13 @@ export class FetchApiDataService {
   }
 
   getMovie(title: string): Observable<any> {
-    return this.http.get(apiUrl + `movies/${title}`)
-      .pipe(catchError(this.handleError));
+    const token = localStorage.getItem('token');
+      return this.http.get(apiUrl + `movies/${title}`, {
+        headers: new HttpHeaders({
+          Authorization: 'Bearer ' + token,
+        })
+      }).pipe(catchError(this.handleError)
+    );
   }
 
   // Double Check the / directors and see if a double // is showing up - this could be the error. need to change for all endpoints below
@@ -65,14 +70,19 @@ export class FetchApiDataService {
       );
   }
 
-  getGenre(id: string): Observable<any> {
-    return this.http.get<any>(`${apiUrl}/genres/${id}`)
+  getGenre(name: string): Observable<any> {
+    return this.http.get<any>(`${apiUrl}/genres/${name}`)
       .pipe(catchError(this.handleError));
   }
 
   getUser(): Observable<any> {
     const user = localStorage.getItem('user');
     const token = localStorage.getItem('token');
+
+    if (!user || !token) {
+      return throwError('User or token not found');
+    }
+
     return this.http.get(apiUrl + `users/${user}`, {
       headers: new HttpHeaders(
         {
@@ -94,12 +104,14 @@ export class FetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  updateUser(username: string, userData: any): Observable<any> {
+  updateUser(updatedUser: any): Observable<any> {
+    const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
-    return this.http.put(apiUrl + `users/${username}`, {
+    console.log(updatedUser);
+    return this.http.put(apiUrl + `users/${username}`, updatedUser, {
       headers: new HttpHeaders(
         {
-          Authorization: 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         })
     }).pipe(
       map(this.extractResponseData),
@@ -107,7 +119,6 @@ export class FetchApiDataService {
     );
   }
   
-
 
   deleteUser(): Observable<any> {
     const user = localStorage.getItem('user');

@@ -1,9 +1,9 @@
 <app-nav-bar></app-nav-bar>
 <div style="padding:1rem">
   <h1>Profile</h1>
-  <p>Username: {{ userData.Username }}</p>
-  <p>Email: {{ userData.Email }}</p>
-  <p>Birthday: {{ userData.Birthday }}</p>
+  <p>Username: {{ user.Username }}</p>
+  <p>Email: {{ user.Email }}</p>
+  <p>Birthday: {{ user.Birthday }}</p>
 
   <h2>Favorite Movies: {{ user.FavoriteMovies }}</h2>
   <mat-list>
@@ -16,20 +16,25 @@
   <h2>Update Profile</h2>
   <form>
     <mat-form-field>
-      <input matInput [(ngModel)]="user.Username" placeholder="Username" type="text" name="Username" required>
+      <input matInput [(ngModel)]="updatedUser.Username" placeholder="Username" type="text" name="Username" required>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [(ngModel)]="user.Password" type="password" placeholder="Password" name="Password">
+      <input matInput [(ngModel)]="updatedUser.Password" type="password" placeholder="Password" name="Password">
     </mat-form-field>
     <mat-form-field>
-      <input matInput [(ngModel)]="user.Email" type="email" placeholder="Email" name="Email">
+      <input matInput [(ngModel)]="updatedUser.Email" type="email" placeholder="Email" name="Email">
     </mat-form-field>
     <mat-form-field>
-      <input matInput [(ngModel)]="user.Birthday" type="date" placeholder="Birthday" name="Birthday">
+      <input matInput [(ngModel)]="updatedUser.Birthday" type="date" placeholder="Birthday" name="Birthday">
     </mat-form-field>
   </form>
 
-  <button mat-raised-button (click)="updateUser()" color="primary">Update</button>
-  <button mat-raised-button (click)="deleteUser()" color="warn">Remove Account Permanently</button>
+  <button mat-raised-button (click)="updateUser()" color="primary">
+    <mat-icon>update</mat-icon>
+    Update
+  </button>
+  <button mat-raised-button (click)="deleteUser()" color="warn"> <mat-icon>delete_forever</mat-icon>
+    Remove Account Permanently
+  </button>
 
 </div>

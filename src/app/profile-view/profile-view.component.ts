@@ -15,7 +15,7 @@ export class ProfileViewComponent implements OnInit {
   user: any = {};
   favoriteMovies: any = [];
 
-  @Input() updatedUser = { Username: '', Password: '', Email: '', Birthday: '' };
+  @Input() userData = { Username: '', Password: '', Email: '', Birthday: '' };
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -32,9 +32,9 @@ export class ProfileViewComponent implements OnInit {
     this.fetchApiData.getUser().subscribe((user) => {
       console.log(user);
       this.user = user;
-      this.updatedUser.Username = this.user.Username;
-      this.updatedUser.Email = this.user.Email;
-      this.updatedUser.Birthday = formatDate(this.user.Birthday, 'yyyy-MM-dd', 'en' );
+      this.userData.Username = this.user.Username;
+      this.userData.Email = this.user.Email;
+      this.userData.Birthday = formatDate(this.user.Birthday, 'yyyy-MM-dd', 'en-US', 'UTC+0' );
     
       this.fetchApiData.getAllMovies().subscribe((response: any) => {
         this.favoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
@@ -45,15 +45,15 @@ export class ProfileViewComponent implements OnInit {
     
 
   updateUser(): void {
-    this.fetchApiData.updateUser(this.updatedUser).subscribe((response) => {
-      console.log(response);
-      localStorage.setItem('user', (response));
+    this.fetchApiData.updateUser(this.userData).subscribe((result) => {
+      console.log(result);
+      localStorage.setItem('user', JSON.stringify(result));
 
       this.snackBar.open('User successfully updated', 'OK', {
         duration: 2000
       });
-    }, (response) => {
-      this.snackBar.open(response, 'OK', {
+    }, (result) => {
+      this.snackBar.open(result, 'OK', {
         duration: 2000
       });
     });
@@ -61,14 +61,15 @@ export class ProfileViewComponent implements OnInit {
 
 
   deleteUser(): void {
-    this.fetchApiData.deleteUser().subscribe((response) => {
-      this.snackBar.open('Profile deleted successfully!', 'OK', {
+    this.fetchApiData.deleteUser().subscribe((result) => {
+      localStorage.clear();
+      console.log(result.message);
+      this.router.navigate(['welcome']);
+      this.snackBar.open(result.message, 'OK', {
         duration: 2000
       });
-      this.router.navigate(['welcome']);
-      localStorage.clear();
-    }, (response) => {
-      this.snackBar.open(response, 'OK', {
+    }, (result) => {
+      this.snackBar.open(result.message, 'OK', {
         duration: 2000
       });
     });

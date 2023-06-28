@@ -1,9 +1,9 @@
 <app-nav-bar></app-nav-bar>
 <div style="padding:1rem">
   <h1>Profile</h1>
-  <p>Username: {{ user.Username }}</p>
-  <p>Email: {{ user.Email }}</p>
-  <p>Birthday: {{ user.Birthday }}</p>
+  <p>Username: {{ userData.Username }}</p>
+  <p>Email: {{ userData.Email }}</p>
+  <p>Birthday: {{ userData.Birthday }}</p>
 
   <h2>Favorite Movies: {{ user.FavoriteMovies }}</h2>
   <mat-list>
@@ -16,7 +16,7 @@
   <h2>Update Profile</h2>
   <form>
     <mat-form-field>
-      <input matInput [(ngModel)]="user.Username" placeholder="Username" type="text" name="Username">
+      <input matInput [(ngModel)]="user.Username" placeholder="Username" type="text" name="Username" required>
     </mat-form-field>
     <mat-form-field>
       <input matInput [(ngModel)]="user.Password" type="password" placeholder="Password" name="Password">
@@ -29,7 +29,7 @@
     </mat-form-field>
   </form>
 
-  <button mat-raised-button (click)="editUser()" color="primary">Update</button>
+  <button mat-raised-button (click)="updateUser()" color="primary">Update</button>
   <button mat-raised-button (click)="deleteUser()" color="warn">Remove Account Permanently</button>
 
 </div>

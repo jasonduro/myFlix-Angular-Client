@@ -33,22 +33,26 @@ export class ProfileViewComponent implements OnInit {
       this.user = user;
       this.userData.Username = this.user.Username;
       this.userData.Email = this.user.Email;
-      this.userData.Birthday = formatDate(this.user.Birthday, 'yyyy-MM-dd', 'en-US');
+      this.userData.Birthday = formatDate(this.user.Birthday, 'yyyy-MM-dd', 'en-US', 'UTC+0');
     
       this.fetchApiData.getAllMovies().subscribe((response: any) => {
         this.favoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
+        return this.user;
       });
     });
   }
     
 
-  editUser(): void {
-    this.fetchApiData.editUser(this.userData).subscribe((response) => {
+  updateUser(): void {
+    this.fetchApiData.updateUser(this.userData.Username, this.userData).subscribe((response) => {
       localStorage.setItem('user', JSON.stringify(response));
 
       this.snackBar.open('User successfully updated', 'OK', {
         duration: 2000
       });
+
+      this.getUser(); // Refresh the user data
+
     }, (response) => {
       this.snackBar.open(response, 'OK', {
         duration: 2000

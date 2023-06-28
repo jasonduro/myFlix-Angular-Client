@@ -26,6 +26,5 @@ export class NavBarComponent {
   logOut(): void {
     localStorage.clear();
     this.router.navigate(['welcome']);
-    window.location.reload();
   }
 }

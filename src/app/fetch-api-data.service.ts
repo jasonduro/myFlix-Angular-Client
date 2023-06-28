@@ -8,12 +8,12 @@ const apiUrl = 'https://myflix-app-jl.herokuapp.com/';
 @Injectable({ providedIn: 'root' })
 
 export class FetchApiDataService {
-  // Inject the HttpClient module to the constructor params
- // This will provide HttpClient to the entire class, making it available via this.http
   
+// Inject the HttpClient module to the constructor params
+// This will provide HttpClient to the entire class, making it available via this.http
  constructor(private http: HttpClient) {}
+ 
  // Making the api call for the user registration endpoint
-  
  public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
     return this.http.post(apiUrl + 'users', userDetails).pipe(
@@ -21,6 +21,7 @@ export class FetchApiDataService {
     );
   }
 
+// Making the api call for the user login endpoint  
   public loginUser(userDetails: any): Observable<any> {
     return this.http.post<any>(apiUrl + 'login', userDetails)
       .pipe(
@@ -51,9 +52,9 @@ export class FetchApiDataService {
   }
 
   // Double Check the / directors and see if a double // is showing up - this could be the error. need to change for all endpoints below
-  getDirector(directorName: string): Observable<any> {
+  getDirector(name: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + `movies/director/` + directorName, {
+    return this.http.get(apiUrl + `movies/director/` + `${name}`, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
@@ -70,8 +71,17 @@ export class FetchApiDataService {
   }
 
   getUser(): Observable<any> {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user;
+    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    return this.http.get(apiUrl + `users/${user}`, {
+      headers: new HttpHeaders(
+        {
+          Authorization: 'Bearer ' + token,
+        })
+      }).pipe(
+        map(this.extractResponseData),
+        catchError(this.handleError)
+      );
   }  
 
   getFavoriteMovies(userId: string): Observable<any> {
@@ -84,10 +94,9 @@ export class FetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  editUser(updatedUser: any): Observable<any> {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+  updateUser(username: string, userData: any): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.put(apiUrl + 'users/' + user.Username, updatedUser, {
+    return this.http.put(apiUrl + `users/${username}`, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
@@ -98,10 +107,10 @@ export class FetchApiDataService {
     );
   }
   
-  
+
 
   deleteUser(): Observable<any> {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const user = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     return this.http.delete(apiUrl + `users/${user}`, {
       headers: new HttpHeaders(

@@ -1,0 +1,30 @@
+.movie-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .movie-card {
+    margin: 1rem;
+    flex: 1 0 300px; // Each card will grow and shrink as needed, but not shrink smaller than 300px
+    width: 100%;
+    max-width: 300px; // Each card will not be wider than 300px
+
+    .card-image {
+      width: 100%;
+      height: auto;
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  // If the viewport is less than 300px wide, make the movie cards full width to accommodate smaller screens
+  @media (max-width: 300px) {
+    .movie-card {
+      flex: 1 0 100%;
+      max-width: 100%;
+    }
+  }
+}

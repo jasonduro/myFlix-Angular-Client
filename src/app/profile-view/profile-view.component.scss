@@ -1,0 +1,49 @@
+.profile-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.profile-section {
+  padding: 2rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
+.favorite-movies-section {
+  padding: 2rem;
+  h2 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+}
+
+.movie-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .movie-card {
+    margin: 1rem;
+    flex: 1 0 300px; // Each card will grow and shrink as needed, but not shrink smaller than 300px
+    width: 100%;
+    max-width: 300px; // Each card will not be wider than 300px
+
+    .card-image {
+      width: 100%;
+      height: auto;
+    }
+  // If the viewport is less than 300px wide, make the movie cards full width to accommodate smaller screens
+  @media (max-width: 300px) {
+    .movie-card {
+      flex: 1 0 100%;
+      max-width: 100%;
+    }
+  }
+}
+}

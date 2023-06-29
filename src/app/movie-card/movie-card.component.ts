@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MovieInfoComponent } from '../movie-info/movie-info.component';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Token } from '@angular/compiler';
 
 @Component({
   selector: 'app-movie-card',
@@ -62,6 +63,9 @@ export class MovieCardComponent {
 
     addFavoriteMovie(movieId: string): void {
       let username = localStorage.getItem('user'); 
+      let token = localStorage.getItem('token');
+      console.log('Token:', token);
+      console.log('Movie ID:', movieId);
       console.log('Username:', username);
       if (username) {
       this.fetchApiData.addFavoriteMovie(username, movieId).subscribe((result) => {
@@ -75,11 +79,9 @@ export class MovieCardComponent {
     }
   }
         
-    isFavoriteMovie(movieId: string): boolean {
-      // Assuming favoriteMovies is an array of objects and each object has a $oid property
-      // which is the id of a favorite movie.
-      return this.favoriteMovies.some(movie => movie._id === movieId);
-    }
+  isFavoriteMovie(movieId: string): boolean {
+    return this.favoriteMovies.includes(movieId);
+  }
     
   
     deleteFavoriteMovie(movieId: string): void {

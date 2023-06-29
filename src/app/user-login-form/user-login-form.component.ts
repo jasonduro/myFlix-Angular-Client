@@ -28,6 +28,7 @@ export class UserLoginFormComponent implements OnInit {
         // Logic for a successful user login goes here! (To be implemented)
         console.log(result);
         localStorage.setItem('user', result.user.Username);
+        localStorage.setItem('userId', result.user._id);
         localStorage.setItem('token', result.token);
         this.dialogRef.close(); // This will close the modal on success!
         this.snackBar.open('user logged in successfully', 'OK', {

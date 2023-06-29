@@ -1,7 +1,9 @@
 <mat-toolbar>
-  <a mat-button (click)="toMovies()" target="_blank">Movies</a>
-  <a mat-button (click)="toProfile()" target="_blank">Profile</a>
-  <button mat-icon-button (click)="logOut()" aria-label="Logout icon-button">
+  <a mat-button (click)="toMovies()" target="_blank">myFlix</a>
+  <button mat-icon-button matTooltip="Profile" aria-label="Profile icon-button" (click)="toProfile()">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="Log Out" (click)="logOut()" aria-label="Logout icon-button">
     <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>

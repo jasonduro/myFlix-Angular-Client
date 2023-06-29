@@ -8,8 +8,8 @@
   <h2>Favorite Movies: {{ user.FavoriteMovies }}</h2>
   <mat-list>
     <mat-list-item *ngFor="let movie of user.FavoriteMovies">
-      <div matListItemTitle>{{ movie.Title }} </div>
-      <div matListItemLine>{{movie.Director.Name}}</div>
+      <div matListItemTitle> {{ movie?.Title }} </div>
+      <div matListItemLine> {{ movie?.Director.Name }} </div>
     </mat-list-item>
   </mat-list>
 

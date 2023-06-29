@@ -133,31 +133,28 @@ export class FetchApiDataService {
         );
     }  
 
-  // API Call for get favorite movies endpoint
-  getFavoriteMovies(userId: string): Observable<any> {
-    const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + `users/${userId}/movies`, {
-      headers: new HttpHeaders(
-        {
-          Authorization: 'Bearer ' + token,
-        })
-      }).pipe(
-        map(this.extractResponseData),
-        catchError(this.handleError)
-      );
-  }
+// API Call for add favorite movies endpoint
+addFavoriteMovie(Username: string, movieId: string): Observable<any> {
+  const token = localStorage.getItem('token');
+  return this.http.post<any>(apiUrl + `users/${Username}` + `/movies/${movieId}`, {
+    headers: new HttpHeaders(
+      {
+        Authorization: 'Bearer ' + token,
+  })
+}).pipe(catchError(this.handleError));
+}
 
-  // API Call for add favorite movies endpoint
-  addFavoriteMovie(userId: string, movieId: string): Observable<any> {
-    return this.http.post<any>(`${apiUrl}/users/${userId}/movies/${movieId}`, {})
-      .pipe(catchError(this.handleError));
-  }
+// API Call for delete favorite movies endpoint
+deleteFavoriteMovie(Username: string, movieId: string): Observable<any> {
+  const token = localStorage.getItem('token');
+  return this.http.delete(apiUrl + `users/${Username}` + `/movies/${movieId}`, {
+    headers: new HttpHeaders(
+      {
+        Authorization: 'Bearer ' + token,
+      })
+  }).pipe(catchError(this.handleError));
+}
 
-  // API Call for delete favorite movies endpoint
-  deleteFavoriteMovie(userId: string, movieId: string): Observable<any> {
-    return this.http.delete(`${apiUrl}/users/${userId}/movies/${movieId}`)
-      .pipe(catchError(this.handleError));
-  }
 
   // Non-typed response extraction
   private extractResponseData(res: any): any {

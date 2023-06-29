@@ -22,6 +22,9 @@ export class MovieCardComponent {
     this.getMovies();
   }
 
+  favoriteMovies: any[] = [];
+  userId: string = localStorage.getItem('userId') || '';
+
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((response: any) => {
       this.movies = response;
@@ -57,6 +60,39 @@ export class MovieCardComponent {
       });
     }
 
-
-
+    addFavoriteMovie(movieId: string): void {
+      let username = localStorage.getItem('user'); 
+      console.log('Username:', username);
+      if (username) {
+      this.fetchApiData.addFavoriteMovie(username, movieId).subscribe((result) => {
+        console.log(result);
+  
+        this.snackBar.open('Movie added to favorites.', 'OK', {
+          duration: 2000
+        });
+        this.favoriteMovies = result.FavoriteMovies;
+      });
+    }
+  }
+        
+    isFavoriteMovie(movieId: string): boolean {
+      // Assuming favoriteMovies is an array of objects and each object has a $oid property
+      // which is the id of a favorite movie.
+      return this.favoriteMovies.some(movie => movie._id === movieId);
+    }
+    
+  
+    deleteFavoriteMovie(movieId: string): void {
+      let username = localStorage.getItem('user'); // get the username from localStorage
+      console.log('Username:', username); 
+      if (username) {
+      this.fetchApiData.deleteFavoriteMovie(username, movieId).subscribe((result) => {
+        this.snackBar.open('Movie removed from favorites.', 'OK', {
+          duration: 2000
+        });
+        // Assuming that result is the updated user document
+        this.favoriteMovies = result.FavoriteMovies;
+      });
+    }
+  }
 }

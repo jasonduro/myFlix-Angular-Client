@@ -1,11 +1,24 @@
 <div class="main-page">
-  <h1>
-    Welcome to myFlix!
-  </h1>
-  <button mat-raised-button (click)="openUserRegistrationDialog()" style="margin-right: 10px;" color="primary">
-    Sign Up
-  </button>
-  <button mat-raised-button color="primary" (click)="openUserLoginDialog()" style="margin-right: 10px;">
-    Login
-  </button>
+  <div class="card-overlay">
+    <h1>
+      Welcome to myFlix!
+    </h1>
+    <div class="welcome-text">
+      <h3>
+        myFlix is a movie database that allows you to view
+        <br> information about your favorite movies, directors, and genres.
+      </h3>
+      <h3>
+        To get started, please sign up or login.
+      </h3>
+    </div>
+    <div>
+      <button mat-raised-button (click)="openUserRegistrationDialog()" style="margin-right: 10px;" color="primary">
+        Sign Up
+      </button>
+      <button mat-raised-button color="primary" (click)="openUserLoginDialog()" style="margin-right: 10px;">
+        Login
+      </button>
+    </div>
+  </div>
 </div>

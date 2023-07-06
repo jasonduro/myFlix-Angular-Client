@@ -26,13 +26,6 @@ import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MovieInfoComponent } from './movie-info/movie-info.component';
 
-const appRoutes: Routes = [
-  { path: 'welcome', component: WelcomePageComponent },
-  { path: 'movies', component: MovieCardComponent },
-  { path: 'profile', component: ProfileViewComponent },
-  { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
-]; 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +49,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatDialogModule,
     MatSnackBarModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule,
     MatIconModule,
     MatToolbarModule,
     MatTooltipModule,
